@@ -4,7 +4,7 @@ import os
 ### --- parameter --- ###
 
 # Save location
-dir_mark = '.'
+dir_mark = './marker'
 
 # Parameter
 num_mark = 20 #Number of markers

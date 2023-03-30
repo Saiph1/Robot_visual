@@ -20,4 +20,4 @@ board_size = (markers_per_row + 1) * marker_size, (markers_per_column + 1) * mar
 img = board.draw(board_size)
 
 # Save the image of the board
-cv2.imwrite('board.png', img)
+cv2.imwrite('./marker/board2.png', img)
