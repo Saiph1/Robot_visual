@@ -162,10 +162,10 @@ def box(img):
     # Aruco Perimeter
     aruco_perimeter = cv2.arcLength(corners[0], True)
     # Pixel to cm ratio
-    pixel_cm_ratio = aruco_perimeter / 20
+    pixel_cm_ratio = aruco_perimeter / 2.5
     
     # Get Width and Height of the Objects by applying the Ratio pixel to cm
     object_width = w / pixel_cm_ratio
     object_height = h / pixel_cm_ratio
-    cv2.putText(img, "Width :{} cm".format(round(object_width, 1)), (int(x-600), int(y+600)), cv2.FONT_HERSHEY_PLAIN, 10, (0, 200, 0), 10)
-    cv2.putText(img, "Height :{} cm".format(round(object_height, 1)), (int(x-600), int(y+450)), cv2.FONT_HERSHEY_PLAIN, 10, (0, 200, 0), 10)
+    cv2.putText(img, "Width :{} cm".format(round(object_width, 3)), (int(x-600), int(y+800)), cv2.FONT_HERSHEY_PLAIN, 10, (0, 200, 0), 10)
+    cv2.putText(img, "Height :{} cm".format(round(object_height, 3)), (int(x-600), int(y+650)), cv2.FONT_HERSHEY_PLAIN, 10, (0, 200, 0), 10)
