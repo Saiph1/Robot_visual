@@ -72,16 +72,12 @@ def Detect_object(img):
     
     # Convert image to grayscale
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-
     # Apply Gaussian blur to reduce noise
     blur = cv2.GaussianBlur(gray, (7, 7), 0)
-
     # Apply threshold to convert the image to binary
     ret, thresh = cv2.threshold(blur, 100, 255, cv2.THRESH_BINARY)
-
     # Find contours of objects in the image
     image, contours, _ = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-
     # Draw contours of objects in the image
     img = cv2.drawContours(img, contours, -1, (0, 255, 0), 2)
 
@@ -256,7 +252,6 @@ def video_point(img):
     # Get rect
     rect = cv2.minAreaRect(cnt)
     (x, y), (w, h), angle = rect
-
     # Display rectangle
     box = cv2.boxPoints(rect)
     box = np.int0(box)
@@ -281,7 +276,6 @@ def video(img):
     mask = cv2.dilate(mask, kernel, iterations=2)
     mask = cv2.erode(mask, kernel, iterations=2)
     
-    
     image, contours, _  = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     # Apply a Gaussian blur to the mask to reduce noise
     mask = cv2.GaussianBlur(mask, (5, 5), 0)
@@ -293,7 +287,6 @@ def video(img):
     for contour in contours:
     # Compute the area of the contour
         area = cv2.contourArea(contour)
-
         # If the area is large enough, it's likely the orange object
         if area > 2000:
             # cv2.drawContours(img, [contour], -1, (0, 255, 0), 2)

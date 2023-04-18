@@ -1,7 +1,9 @@
-from utils import display, Detect_marker, Detect_edge
-from utils import get_sharp_points, Detect_object, box, demo, video_demo, video, videodraw
+# from utils import display, Detect_marker, Detect_edge
+# from utils import get_sharp_points, Detect_object, box, demo, video_demo, video, videodraw
+from mac_utils import video, test, orange_box
 import cv2 
 import numpy as np
+import math
 
 if __name__ == "__main__" :
     # Read the image
@@ -23,13 +25,58 @@ if __name__ == "__main__" :
 
     # Stage 3: 
     cap = cv2.VideoCapture('./Demo/PXL_20230417_134842457.TS.mp4')
-
+    # centers = []
+    x=[]
+    y=[]
+    tmp_x = [0]
+    tmp_y = [0]
+    height = [0]
+    # ratio = 35.6/159
+    ratio = 35.6/171.38
     while (cap.isOpened()):
         # Capture frame-by-frame
         ret, frame = cap.read()
-        video(frame)
-        cv2.imshow('with circle', frame)
+        #crop
+        frame = frame[0:280, 0:500]
+        x1, y1 = orange_box(frame)
+        x.append(x1)
+        y.append(y1)
+        # video(frame)
+        # compute moving average
+        window_size = 3
+        weights = np.ones(window_size) / window_size
+        x_ma = np.convolve(x, weights, mode='valid')
+        y_ma = np.convolve(y, weights, mode='valid')
         # define q as the exit button
+        for i in range(len(x_ma)):
+            if(i>7 and len(x_ma)>7): 
+                break
+            # print(i)
+            cv2.circle(frame, [int(x_ma[len(x_ma)-1-i]), int(y_ma[len(y_ma)-1-i])], 2, (255, 255, 0), -1)
+        
+        # update once every 10 frames
+        if (len(x)>1):
+            dx = np.gradient(x)
+            dy = np.gradient(y)
+            if (not len(x)%10):
+                tmp_x[0] = dx[len(dx)-1]
+                tmp_y[0] = dy[len(dy)-1]
+            cv2.putText(frame, "dx :{} cm".format(round(tmp_x[0]*ratio, 3)), (200,230), 
+                cv2.FONT_HERSHEY_PLAIN, 1, 
+                (0, math.floor(200-abs(tmp_x[0])*20), math.floor(abs(tmp_x[0])*20)), 2)
+            cv2.putText(frame, "dy :{} cm".format(round(tmp_y[0]*ratio, 3)), (200,250), 
+                cv2.FONT_HERSHEY_PLAIN, 1,
+                (0, math.floor(200-abs(tmp_y[0])*20), math.floor(abs(tmp_y[0])*20)), 2)
+        
+        cv2.putText(frame, "x_dis :{} cm".format(round((x[len(x)-1]-x[0])*ratio, 3)), (20,230), 
+                cv2.FONT_HERSHEY_PLAIN, 1, 
+                (0, 200, 0, 2),2)
+        cv2.putText(frame, "y_dis :{} cm".format(-round((y[len(y)-1]-x[0])*ratio, 3)), (20,250), 
+                cv2.FONT_HERSHEY_PLAIN, 1,
+                (0, 200, 0, 2),2)
+        
+        cv2.imshow('Processed', frame)
+
         if cv2.waitKey(25) & 0xFF == ord('q'):
             break
     # release the video capture object
