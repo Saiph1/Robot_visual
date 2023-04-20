@@ -1,3 +1,4 @@
-Test/*
-marker/*
-__pycache__
+# Test/*
+# marker/*
+# __pycache__
+# *.png
