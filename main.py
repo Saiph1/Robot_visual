@@ -32,7 +32,7 @@ if __name__ == "__main__" :
     tmp_x = [0]
     tmp_y = [0]
     height = [0]
-    # ratio = 35.6/159
+    # ratio = 35.6/159, pixel to cm ratio. 
     ratio = 35.6/171.38
     dx = []
     dy = []
