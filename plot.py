@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-
+# This is used to analyze the moving of the robot displacement, towards capturing the real-time information.
 mov_avg_x = np.loadtxt('mov_avg_x.txt')
 mov_avg_y = np.loadtxt('mov_avg_y.txt')
 dx = np.loadtxt('dx.txt')

@@ -74,6 +74,7 @@ if __name__ == "__main__" :
             if (not len(x)%15):
                 tmp_x[0] = dx[len(dx)-1]
                 tmp_y[0] = dy[len(dy)-1]
+            # text on the result image showing the displacements.
             cv2.putText(frame, "dx :{} cm".format(round(tmp_x[0]*ratio, 3)), (300,330), 
                 cv2.FONT_HERSHEY_PLAIN, 1, 
                 (0, math.floor(200-abs(tmp_x[0])*20), math.floor(abs(tmp_x[0])*20)), 2)
